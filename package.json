@@ -1,6 +1,6 @@
 {
   "name": "react-keyboard-manager",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "library for tracking keyboard button presses in React",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -19,6 +19,12 @@
     "url": "https://github.com/NeverSeec/react-keyboard-manager/issues"
   },
   "homepage": "https://github.com/NeverSeec/react-keyboard-manager#readme",
+  "keywords": [
+    "keyboard",
+    "react-keyboard",
+    "react-keyboard-manager",
+    "useKeyboard"
+  ],
   "devDependencies": {
     "@babel/core": "7.24.6",
     "@babel/preset-env": "7.24.6",
