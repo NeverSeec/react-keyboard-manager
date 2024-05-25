@@ -13,7 +13,7 @@ import { Stack } from "./Stack";
 export class KeyboardManager {
   private stackStorage: StackStorage = {};
 
-  private getStack<Key extends KeyCode>(key: Key) {
+  private getStack = <Key extends KeyCode>(key: Key) => {
     const stack = this.stackStorage[key];
 
     if (stack) return stack;
@@ -23,13 +23,13 @@ export class KeyboardManager {
     this.stackStorage[key] = newStack;
 
     return newStack;
-  }
+  };
 
   private get isAllStackEmpty() {
     return Object.values(this.stackStorage).every((stack) => stack?.isEmpty());
   }
 
-  private onKeyDown(event: KeyboardEvent) {
+  private onKeyDown = (event: KeyboardEvent) => {
     const stack = this.stackStorage[event.key];
 
     if (!stack) return;
@@ -39,7 +39,7 @@ export class KeyboardManager {
     if (!callback) return;
 
     callback(event);
-  }
+  };
 
   private removeCallback({ stack, callback }: KeyboardRemoveParams) {
     stack.delete(callback);
