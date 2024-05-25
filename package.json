@@ -1,6 +1,6 @@
 {
   "name": "react-keyboard-manager",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "library for tracking keyboard button presses in React",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

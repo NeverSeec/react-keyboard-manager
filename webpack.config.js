@@ -25,4 +25,8 @@ module.exports = ({ development }) => ({
       },
     ],
   },
+  externals: {
+    react: "umd react",
+    "react-dom": "umd react-dom",
+  },
 });
