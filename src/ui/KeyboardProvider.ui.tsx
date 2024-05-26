@@ -1,4 +1,4 @@
-import { Children, createContext, ReactNode, useContext, useMemo } from "react";
+import { createContext, ReactNode, useContext, useMemo } from "react";
 import { KeyboardAddParamsType } from "../types/KeyboardManager.types";
 import { KeyboardManager } from "../lib/KeyboardManager";
 
