@@ -29,7 +29,7 @@ function App() {
 
 ```
 useKeyboard({
-  key: "esc",
+  key: "Escape",
   callback: onCloseModal,
 });
 ```
