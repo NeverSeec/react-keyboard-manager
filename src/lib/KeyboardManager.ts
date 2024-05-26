@@ -26,7 +26,7 @@ export class KeyboardManager {
   };
 
   private get isAllStackEmpty() {
-    return Object.values(this.stackStorage).every((stack) => stack?.isEmpty());
+    return Object.values(this.stackStorage).every((stack) => stack?.isEmpty);
   }
 
   private onKeyDown = (event: KeyboardEvent) => {
