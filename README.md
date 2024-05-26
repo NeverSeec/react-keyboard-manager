@@ -1,5 +1,8 @@
 # react-keyboard-manager
 
+[![npm version](https://badge.fury.io/js/react-keyboard-manager.svg)](https://badge.fury.io/js/react-keyboard-manager)
+[![](https://data.jsdelivr.com/v1/package/npm/react-keyboard-manager/badge)]([https://www.jsdelivr.com/package/npm/queryzz](https://www.jsdelivr.com/package/npm/react-keyboard-manager))
+
 ## KeyboardProvider
 
 Wrap the application in **KeyboardProvider**
