@@ -1,66 +1,88 @@
-import { EVENT_TYPE } from "../config/KeyboardManager.config";
-
 import {
   KeyCode,
   KeyboardCallbackRef,
   StackStorage,
   KeyboardRemoveParams,
   KeyboardAddParams,
+  EventType,
+  StackStorageByEventType,
 } from "../types/KeyboardManager.types";
+import { KeyPressedListener } from "./KeyPressedListener";
 
 import { Stack } from "./Stack";
 
 export class KeyboardManager {
-  private stackStorage: StackStorage = {};
+  private keyPressed = new KeyPressedListener();
+  private stackStorage: StackStorageByEventType = {
+    [EventType.KEYDOWN]: {},
+    [EventType.KEYUP]: {},
+  };
 
-  private getStack = <Key extends KeyCode>(key: Key) => {
-    const stack = this.stackStorage[key];
+  private getStack = <Key extends KeyCode>(key: Key, eventType: EventType) => {
+    const stack = this.stackStorage[eventType][key];
 
     if (stack) return stack;
 
     const newStack = new Stack<KeyboardCallbackRef>();
 
-    this.stackStorage[key] = newStack;
+    this.stackStorage[eventType][key] = newStack;
 
     return newStack;
   };
 
-  private get isAllStackEmpty() {
-    return Object.values(this.stackStorage).every((stack) => stack?.isEmpty());
+  private isAllStackEmpty(type: EventType) {
+    return Object.values(this.stackStorage[type]).every(
+      (stack) => stack?.isEmpty
+    );
   }
 
-  private onKeyDown = (event: KeyboardEvent) => {
-    const stack = this.stackStorage[event.key];
+  private getCallbackByEventType = (type: EventType) => {
+    const stackStorageByEventType = this.stackStorage[type];
 
-    if (!stack) return;
+    return (event: KeyboardEvent) => {
+      const stack = stackStorageByEventType[event.key];
 
-    const callback = stack.last?.current?.callback;
+      const listener = () => {
+        const callback = stack?.last?.current?.callback;
 
-    if (!callback) return;
+        if (!callback) return;
 
-    callback(event);
+        callback(event);
+      };
+
+      if (type === EventType.KEYUP) {
+        listener();
+        return;
+      }
+      this.keyPressed.listener(event, listener);
+    };
   };
 
-  private removeCallback({ stack, callback }: KeyboardRemoveParams) {
+  private removeCallback = ({
+    stack,
+    callback,
+    type,
+  }: KeyboardRemoveParams) => {
     stack.delete(callback);
 
-    if (this.isAllStackEmpty) {
-      window.removeEventListener(EVENT_TYPE, this.onKeyDown);
+    if (this.isAllStackEmpty(type)) {
+      window.removeEventListener(type, this.getCallbackByEventType(type));
     }
-  }
+  };
 
-  public addCallback<Key extends KeyCode>({
+  public addCallback = <Key extends KeyCode>({
     key,
     callback,
-  }: KeyboardAddParams<Key>) {
-    if (this.isAllStackEmpty) {
-      window.addEventListener(EVENT_TYPE, this.onKeyDown);
+    type = EventType.KEYDOWN,
+  }: KeyboardAddParams<Key>) => {
+    if (this.isAllStackEmpty(type)) {
+      window.addEventListener(type, this.getCallbackByEventType(type));
     }
 
-    const stack = this.getStack(key);
+    const stack = this.getStack(key, type);
 
     stack.push(callback);
 
-    return () => this.removeCallback({ stack, callback });
-  }
+    return () => this.removeCallback({ stack, callback, type });
+  };
 }

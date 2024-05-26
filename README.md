@@ -24,12 +24,13 @@ function App() {
 | key      | keyboard key value                            |
 | callback | function that is called when a key is pressed |
 | disable  | disable a callback call                       |
+| type     | keydown/keyup, default value - keydown        |
 
 **Exapmle:**
 
 ```
 useKeyboard({
-  key: "esc",
+  key: "Escape",
   callback: onCloseModal,
 });
 ```

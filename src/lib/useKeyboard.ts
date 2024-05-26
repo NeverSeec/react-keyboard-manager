@@ -10,6 +10,7 @@ import { useKeyboardContext } from "../ui/KeyboardProvider.ui";
 export function useKeyboard<Key extends KeyCode>({
   key,
   callback,
+  type,
   disable = false,
 }: UseKeyboardProps<Key>) {
   const callbackRef: KeyboardCallbackRef = useRef(null);
@@ -19,8 +20,9 @@ export function useKeyboard<Key extends KeyCode>({
 
   const removeCallback = useMemo(() => {
     if (disable || !addCallback) return null;
-    return addCallback({ key, callback: callbackRef });
-  }, [disable, key, addCallback]);
+
+    return addCallback({ key, callback: callbackRef, type });
+  }, [disable, key, addCallback, type]);
 
   useEffect(() => {
     if (!removeCallback) return;

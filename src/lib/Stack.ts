@@ -1,12 +1,12 @@
 export class Stack<T> {
   private stack: T[] = [];
 
-  public isEmpty() {
+  public get isEmpty() {
     return this.stack.length === 0;
   }
 
   public get last() {
-    if (this.isEmpty()) return null;
+    if (this.isEmpty) return null;
 
     return this.stack[this.stack.length - 1];
   }
