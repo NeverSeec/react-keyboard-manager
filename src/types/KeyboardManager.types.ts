@@ -11,7 +11,7 @@ export type KeyboardCallbackRef = MutableRefObject<KeyboardCallback>;
 export interface UseKeyboardProps<Key extends KeyCode> {
   key: Key;
   callback: KeyboardCallbackType;
-  disable?: boolean;
+  disabled?: boolean;
 }
 
 export interface KeyboardAddParams<Key extends KeyCode> {
